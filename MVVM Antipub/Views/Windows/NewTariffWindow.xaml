@@ -1,0 +1,40 @@
+﻿<Window x:Class="MVVM_Antipub.Views.Windows.NewTariffWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVM_Antipub.Views" xmlns:viewmodels="clr-namespace:MVVM_Antipub.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:NewTariffViewModel}"
+        mc:Ignorable="d"
+        Title="Добавить запись" Width="369"
+        Height="193">
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <TextBlock DockPanel.Dock="Left" Text="Название тарифа: "
+                 >
+            
+            </TextBlock>
+            <TextBox DockPanel.Dock="Left"
+                 BorderThickness="0"
+                 Width="150"
+                 Text="{Binding Path=Name, Mode=OneWayToSource}"
+                 />
+
+
+            <Button Height="20" Command="{Binding AddCommand}" Content="Создать тариф" DockPanel.Dock="Left" Width="100"></Button>
+        </DockPanel>
+        <DataGrid
+            DockPanel.Dock="Top"
+            Grid.Row="2"
+            ItemsSource="{Binding Path = Hours, Mode=TwoWay}"
+            CanUserAddRows="True"
+            AutoGenerateColumns="False"
+            
+        >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер часа" x:Name="NumberOfHour" Binding="{Binding Path=NumberOfHour, Mode=TwoWay}"/>
+                <DataGridTextColumn Header="Цена" x:Name="Cost" Binding="{Binding Path=Cost, Mode=TwoWay}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+    </DockPanel>
+</Window>
