@@ -19,7 +19,7 @@
             DockPanel.Dock="Top"
             x:Name="TariffGrid"
             CanUserAddRows="False"
-            ItemsSource="{Binding Path=Tariffs, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+            ItemsSource="{Binding Path=Tariffs, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" x:Name="Name" Binding="{Binding Path=Name}"/>
                 <DataGridTextColumn Header="Временно" x:Name="Temp" Binding="{Binding Path=Hours.Count}"/>

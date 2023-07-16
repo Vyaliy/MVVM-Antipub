@@ -13,6 +13,7 @@ namespace MVVM_Antipub.Models.Repositories
     {
         public static ObservableCollection<Tariff> ReadAll(this DbSet<Tariff> db)
         {
+            db.Load();
             return db.Local.ToObservableCollection();
         }
         public static void Insert (this DbSet<Tariff> db, Tariff tariff)

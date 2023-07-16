@@ -20,7 +20,7 @@
                 <DataGridTextColumn Header="Имя" x:Name="Name" Binding="{Binding Path=Name}"/>
                 <DataGridTextColumn Header="Номер карты" x:Name="CardNumber" Binding="{Binding Path=CardNumber}"/>
                 <DataGridTextColumn Header="Время прибытия" x:Name="ArrivalTime" Binding="{Binding Path=ArrivalTime, StringFormat= HH:mm:ss}"/>
-                <DataGridTextColumn Header="Прошло времени" x:Name="PastTime" Binding="{Binding Path=PastTime, StringFormat= hh\\:mm\\:ss, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Прошло времени" x:Name="PastTime" Binding="{Binding Path=PastTime, StringFormat= '{}{0:%d} {0:hh}:{0:mm}:{0:ss}', UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Тариф" x:Name="TariffName" Binding="{Binding Path=TariffName}"/>
                 <DataGridTextColumn Header="Сумма" x:Name="Summ" Binding="{Binding Path=Summ, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Комментарий" x:Name="Comment" Binding="{Binding Path=Comment}"/>

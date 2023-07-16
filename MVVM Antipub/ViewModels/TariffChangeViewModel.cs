@@ -27,7 +27,7 @@ namespace MVVM_Antipub.ViewModels
             set
             {
                 tariffs = value;
-                OnPropertyChanged("Tariffs");
+                OnPropertyChanged();
             }
         }
         public new MainWindowViewModel parentViewModel { get; set; }
@@ -38,7 +38,11 @@ namespace MVVM_Antipub.ViewModels
             using (var db = new ApplicationContext())
             {
                 //db.Database.EnsureDeleted();
-                Tariffs = db.Tariffs.ReadAll();
+                foreach (var t in db.Tariffs.ReadAll())
+                {
+                    Tariffs.Add(t);
+                }
+                //a.CollectionChanged += (_, _) => OnPropertyChanged(nameof(Tariffs));
             }
         }
 
@@ -54,8 +58,7 @@ namespace MVVM_Antipub.ViewModels
                     wndNewTariff.ShowDialog();
                     using (var db = new ApplicationContext())
                     {
-                        db.Database.EnsureDeleted();
-                        db.Tariffs.Add(Tariffs.Last());
+                        db.Tariffs.Insert(Tariffs.Last());
                         db.SaveChanges();
                     }
                 });

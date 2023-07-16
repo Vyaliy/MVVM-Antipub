@@ -18,7 +18,6 @@ namespace MVVM_Antipub.ViewModels
         {
             using (var db = new ApplicationContext())
             {
-
                 db.Database.EnsureCreated();
                 db.ClosedNotes.Load();
                 ClosedNotes = db.ClosedNotes.Local.ToObservableCollection();

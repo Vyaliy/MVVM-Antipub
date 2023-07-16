@@ -37,12 +37,7 @@ namespace MVVM_Antipub.ViewModels
                 {
                     Tariff = new Tariff(Name, Hours.ToList());
                     Tariff.Name = Name;
-                    try
-                    {
-                        parentViewModel.Tariffs.Add(Tariff);
-                    }
-                    catch (Exception ex)
-                    { }
+                    parentViewModel.Tariffs.Add(Tariff);
                     CloseThis();
 
                 });
