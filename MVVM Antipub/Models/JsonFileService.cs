@@ -20,7 +20,10 @@ namespace MVVM_Antipub.Models
             using (FileStream fs = new FileStream(filename, FileMode.OpenOrCreate))
             {
                 //phones = jsonFormatter.ReadObject(fs) as List<CurrentNote>;
-                phones = JsonSerializer.Deserialize<List<CurrentNote>>(fs);
+                if (fs.Length > 0)
+                {
+                    phones = JsonSerializer.Deserialize<List<CurrentNote>>(fs);
+                }
             }
             return phones;
         }

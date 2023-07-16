@@ -191,6 +191,10 @@ namespace MVVM_Antipub.ViewModels
             this.fileService = fileService;
             this.dialogService = new DefaultDialogService();
             this.dialogService.FilePath = Path.Combine(Directory.GetCurrentDirectory(), "CurentNotes.json");
+            if (!File.Exists(dialogService.FilePath))
+            {
+                File.Create(dialogService.FilePath);
+            }
             CurrentNotes = new ObservableCollection<CurrentNote>();
             //FillTheNotes(currentNotes);
             OpenFromFile();
