@@ -15,7 +15,7 @@ using MVVM_Antipub.Views.Windows;
 
 namespace MVVM_Antipub.ViewModels
 {
-    public class TariffChangeViewModel : ViewModelBase
+    public class TariffWindowViewModel : ViewModelBase
     {
         private ObservableCollection<Tariff> tariffs;
         public ObservableCollection<Tariff> Tariffs 
@@ -31,7 +31,7 @@ namespace MVVM_Antipub.ViewModels
             }
         }
         public new MainWindowViewModel parentViewModel { get; set; }
-        public TariffChangeViewModel(MainWindowViewModel parentViewModel) 
+        public TariffWindowViewModel(MainWindowViewModel parentViewModel) 
         {
             base.parentViewModel = parentViewModel;
             Tariffs = new ObservableCollection<Tariff>();
@@ -61,6 +61,17 @@ namespace MVVM_Antipub.ViewModels
                         db.Tariffs.Insert(Tariffs.Last());
                         db.SaveChanges();
                     }
+                });
+            }
+        }
+        public RelayCommand deleteCommand;
+        public RelayCommand DeleteComand
+        {
+            get
+            {
+                return deleteCommand = new RelayCommand(obj =>
+                {
+
                 });
             }
         }

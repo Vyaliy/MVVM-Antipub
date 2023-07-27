@@ -20,9 +20,9 @@ namespace MVVM_Antipub.Views
     /// <summary>
     /// Логика взаимодействия для NewNote.xaml
     /// </summary>
-    public partial class NewNote : Window
+    public partial class NewNoteWindow : Window
     {
-        public NewNote(MainWindowViewModel parentViewModel)
+        public NewNoteWindow(MainWindowViewModel parentViewModel)
         {
             NewNoteViewModel newNoteViewModel = new NewNoteViewModel(parentViewModel);
             newNoteViewModel.WANNACLOSE += Close;

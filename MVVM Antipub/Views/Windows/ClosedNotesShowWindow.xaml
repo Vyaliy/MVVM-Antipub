@@ -1,11 +1,11 @@
-﻿<Window x:Class="MVVM_Antipub.Views.Windows.DBShowWindow"
+﻿<Window x:Class="MVVM_Antipub.Views.Windows.ClosedNotesShowWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVM_Antipub.Views.Windows"
         xmlns:viewmodels="clr-namespace:MVVM_Antipub.ViewModels" 
-        d:DataContext="{d:DesignInstance Type=viewmodels:DBShowWindowViewModel}"
+        d:DataContext="{d:DesignInstance Type=viewmodels:ClosedNotesShowWindowViewModel}"
         mc:Ignorable="d"
         Title="Учет клиентов антикафе" Height="450" Width="800">
     <Grid>

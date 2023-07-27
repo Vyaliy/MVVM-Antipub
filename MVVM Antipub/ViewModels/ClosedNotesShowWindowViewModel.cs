@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace MVVM_Antipub.ViewModels
 {
-    public class DBShowWindowViewModel : ViewModelBase
+    public class ClosedNotesShowWindowViewModel : ViewModelBase
     {
         public ObservableCollection<ClosedNote> ClosedNotes { get; set; }
 
-        public DBShowWindowViewModel()
+        public ClosedNotesShowWindowViewModel()
         {
             using (var db = new ApplicationContext())
             {

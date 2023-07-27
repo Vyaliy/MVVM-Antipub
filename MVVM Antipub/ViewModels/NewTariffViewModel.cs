@@ -19,8 +19,8 @@ namespace MVVM_Antipub.ViewModels
         public ObservableCollection<Hour> Hours { get; set; }
         public Tariff Tariff { get; set; }
         public string Name { get; set; }
-        public new TariffChangeViewModel parentViewModel { get; set; }
-        public NewTariffViewModel(TariffChangeViewModel parentViewModel)
+        public new TariffWindowViewModel parentViewModel { get; set; }
+        public NewTariffViewModel(TariffWindowViewModel parentViewModel)
         {
             this.parentViewModel = parentViewModel;
             Hours = new ObservableCollection<Hour>

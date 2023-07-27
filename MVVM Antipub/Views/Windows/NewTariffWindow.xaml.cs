@@ -20,7 +20,7 @@ namespace MVVM_Antipub.Views.Windows
     /// </summary>
     public partial class NewTariffWindow : Window
     {
-        public NewTariffWindow(TariffChangeViewModel parent)
+        public NewTariffWindow(TariffWindowViewModel parent)
         {
             NewTariffViewModel newNoteViewModel = new NewTariffViewModel(parent);
             newNoteViewModel.WANNACLOSE += Close;

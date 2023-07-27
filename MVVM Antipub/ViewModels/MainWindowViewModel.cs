@@ -50,7 +50,7 @@ namespace MVVM_Antipub.ViewModels
                         //CurrentNote newCN = new CurrentNote() { Name = "ГостьДобавленный", CardNumber = 1, ArrivalTime = DateTime.Now, TariffName = "Стандарт" };
                         //CurrentNotes.Add(newCN);
                         //SelectedNote = newCN;
-                        NewNote wndNewNote = new NewNote(this);
+                        NewNoteWindow wndNewNote = new NewNoteWindow(this);
                         wndNewNote.ShowDialog();
                         SaveToFile(); //КОСТЫЛЬ
                     });
@@ -142,7 +142,7 @@ namespace MVVM_Antipub.ViewModels
             {
                 return dBShow = new RelayCommand(obj =>
                 {
-                    DBShowWindow dBShowWindow = new DBShowWindow();
+                    ClosedNotesShowWindow dBShowWindow = new ClosedNotesShowWindow();
                     dBShowWindow.ShowDialog();
                 });
             }
@@ -154,7 +154,7 @@ namespace MVVM_Antipub.ViewModels
             {
                 return tariffsShow = new RelayCommand(obj =>
                 {
-                    TariffChange tariffChange = new TariffChange(this);
+                    TariffWindow tariffChange = new TariffWindow(this);
                     tariffChange.ShowDialog();
                 });
             }

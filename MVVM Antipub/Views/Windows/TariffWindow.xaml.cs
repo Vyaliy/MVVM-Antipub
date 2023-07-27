@@ -18,11 +18,11 @@ namespace MVVM_Antipub.Views.Windows
     /// <summary>
     /// Логика взаимодействия для TariffChange.xaml
     /// </summary>
-    public partial class TariffChange : Window
+    public partial class TariffWindow : Window
     {
-        public TariffChange(MainWindowViewModel mainWindowViewModel)
+        public TariffWindow(MainWindowViewModel mainWindowViewModel)
         {
-            TariffChangeViewModel tariffChangeViewModel= new TariffChangeViewModel(mainWindowViewModel);
+            TariffWindowViewModel tariffChangeViewModel= new TariffWindowViewModel(mainWindowViewModel);
             tariffChangeViewModel.WANNACLOSE += Close;
             InitializeComponent();
             DataContext = tariffChangeViewModel;
