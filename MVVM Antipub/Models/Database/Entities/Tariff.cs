@@ -12,7 +12,7 @@ namespace MVVM_Antipub.Models.Database
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Version { get; set; }
+        public bool InUse { get; set; }
         public int MinimumBill { get; set; }
         public int StopCheck { get; set; }
         public int FreeTimeMinutes { get; set; }
@@ -25,7 +25,7 @@ namespace MVVM_Antipub.Models.Database
             StopCheck = 0;
             FreeTimeMinutes = 0;
             Comment = string.Empty;
-            Version = 0;
+            InUse = true;
             MinimumBill = 0;
         }
         public Tariff() { }

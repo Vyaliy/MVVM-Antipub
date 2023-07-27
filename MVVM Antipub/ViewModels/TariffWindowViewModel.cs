@@ -30,6 +30,22 @@ namespace MVVM_Antipub.ViewModels
                 OnPropertyChanged();
             }
         }
+        private List<Hour> hours;
+        public List<Hour> Hours
+        {
+            get { return hours; }
+            set { hours = value; }
+        }
+        private Tariff selectedTariff;
+        public Tariff SelectedTariff
+        {
+            get { return selectedTariff; }
+            set
+            {
+                selectedTariff = value;
+                OnPropertyChanged("SelectedTariff");
+            }
+        }
         public new MainWindowViewModel parentViewModel { get; set; }
         public TariffWindowViewModel(MainWindowViewModel parentViewModel) 
         {
@@ -37,11 +53,11 @@ namespace MVVM_Antipub.ViewModels
             Tariffs = new ObservableCollection<Tariff>();
             using (var db = new ApplicationContext())
             {
-                //db.Database.EnsureDeleted();
                 foreach (var t in db.Tariffs.ReadAll())
                 {
                     Tariffs.Add(t);
                 }
+                Hours = db.Hours.ToList();
                 //a.CollectionChanged += (_, _) => OnPropertyChanged(nameof(Tariffs));
             }
         }
@@ -64,15 +80,27 @@ namespace MVVM_Antipub.ViewModels
                 });
             }
         }
-        public RelayCommand deleteCommand;
-        public RelayCommand DeleteComand
+        public RelayCommand removeCommand;
+        public RelayCommand RemoveCommand
         {
             get
             {
-                return deleteCommand = new RelayCommand(obj =>
-                {
-
-                });
+                return removeCommand ??
+                    (removeCommand = new RelayCommand(obj =>
+                    {
+                        Tariff tariff = obj as Tariff;
+                        if (tariff != null)
+                        {
+                            using (var db = new ApplicationContext())
+                            {
+                                db.Tariffs.Delete(tariff);
+                                db.SaveChanges();
+                                Tariffs = db.Tariffs.ReadAll();
+                            }
+                        }
+                    },
+                    (obj) => Tariffs.Count > 0)
+                    );
             }
         }
     }

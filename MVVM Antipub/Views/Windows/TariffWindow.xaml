@@ -11,14 +11,15 @@
     <DockPanel>
         <DockPanel Width="800" Height="20" DockPanel.Dock="Top">
             <Button Command="{Binding AddCommand}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Добавить запись</Button>
-            <Button Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedNote}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Удалить запись</Button>
-            <Button Command="{Binding EndNote}" CommandParameter="{Binding SelectedNote}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Закрыть запись</Button>
+            <Button Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedTariff}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Удалить запись</Button>
+            <Button Command="{Binding EndNote}" CommandParameter="{Binding SelectedTariff}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Закрыть запись</Button>
         </DockPanel>
         <DataGrid
             AutoGenerateColumns="False"
             DockPanel.Dock="Top"
             x:Name="TariffGrid"
             CanUserAddRows="False"
+            SelectedItem="{Binding SelectedTariff}"
             ItemsSource="{Binding Path=Tariffs, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" x:Name="Name" Binding="{Binding Path=Name}"/>

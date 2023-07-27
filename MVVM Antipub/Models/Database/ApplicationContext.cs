@@ -12,7 +12,7 @@ namespace MVVM_Antipub.Models
     public class ApplicationContext : DbContext
     {
         public DbSet<ClosedNote> ClosedNotes { get; set; }
-        public DbSet<Hour> Minutes { get; set; }
+        public DbSet<Hour> Hours { get; set; }
         public DbSet<RegularCustomer> RegularCustomers { get; set; }
         public DbSet<Tariff> Tariffs { get; set; }
         public ApplicationContext()
