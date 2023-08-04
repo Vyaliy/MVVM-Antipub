@@ -72,10 +72,18 @@ namespace MVVM_Antipub.ViewModels
                 {
                     NewTariffWindow wndNewTariff = new NewTariffWindow(this);
                     wndNewTariff.ShowDialog();
-                    using (var db = new ApplicationContext())
+                    if (Tariffs.Count > 0)
                     {
-                        db.Tariffs.Insert(Tariffs.Last());
-                        db.SaveChanges();
+                        /*
+                        using (var db = new ApplicationContext())
+                        {
+                            if (!db.Tariffs.Contains(Tariffs.Last()))
+                            {
+                                db.Tariffs.Insert(Tariffs.Last());
+                                db.SaveChanges();
+                            }
+                        }
+                        */
                     }
                 });
             }

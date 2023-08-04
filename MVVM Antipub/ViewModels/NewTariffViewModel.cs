@@ -1,5 +1,6 @@
 ﻿using MVVM_Antipub.Models;
 using MVVM_Antipub.Models.Database;
+using MVVM_Antipub.Models.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -36,8 +37,12 @@ namespace MVVM_Antipub.ViewModels
                 return addCommand = new RelayCommand(obj =>
                 {
                     Tariff = new Tariff(Name, Hours.ToList());
-                    Tariff.Name = Name;
                     parentViewModel.Tariffs.Add(Tariff);
+                    using (var db = new Models.ApplicationContext())
+                    {
+                        db.Tariffs.Insert(Tariff);
+                        db.SaveChanges();
+                    }
                     CloseThis();
 
                 });

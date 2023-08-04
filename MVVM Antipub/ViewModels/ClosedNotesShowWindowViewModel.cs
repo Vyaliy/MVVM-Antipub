@@ -20,6 +20,10 @@ namespace MVVM_Antipub.ViewModels
             {
                 db.Database.EnsureCreated();
                 db.ClosedNotes.Load();
+                foreach (var note in db.ClosedNotes)
+                {
+                    note.Tariff = db.Tariffs.First(x => x.Id == note.TariffId);
+                }
                 ClosedNotes = db.ClosedNotes.Local.ToObservableCollection();
             }
         }

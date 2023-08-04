@@ -11,12 +11,28 @@ namespace MVVM_Antipub.Models
 {
     public class ApplicationContext : DbContext
     {
+        private DbSet<Tariff> tariffs;
+
         public DbSet<ClosedNote> ClosedNotes { get; set; }
         public DbSet<Hour> Hours { get; set; }
         public DbSet<RegularCustomer> RegularCustomers { get; set; }
-        public DbSet<Tariff> Tariffs { get; set; }
+        public DbSet<Tariff> Tariffs
+        {
+            get
+            {
+                foreach (var t in tariffs)
+                    t.Hours = Hours.Where(x => x.TariffId == t.Id).ToList();
+                return tariffs;
+            }
+
+            set
+            {
+                tariffs = value;
+            }
+        }
         public ApplicationContext()
         {
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

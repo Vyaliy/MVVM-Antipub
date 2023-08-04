@@ -19,11 +19,17 @@
             DockPanel.Dock="Top"
             x:Name="TariffGrid"
             CanUserAddRows="False"
+            
             SelectedItem="{Binding SelectedTariff}"
-            ItemsSource="{Binding Path=Tariffs, UpdateSourceTrigger=PropertyChanged}">
+            ItemsSource="{Binding Path=Tariffs, UpdateSourceTrigger=PropertyChanged}" Background="#FF777777" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" x:Name="Name" Binding="{Binding Path=Name}"/>
-                <DataGridTextColumn Header="Временно" x:Name="Temp" Binding="{Binding Path=Hours.Count}"/>
+                <DataGridTextColumn Header="Стоп-чек" x:Name="StopCheck" Binding="{Binding Path=StopCheck}"/>
+                <DataGridTextColumn Header="Первый час" x:Name="Hour0" Binding="{Binding Path=Hours[0].Cost}"/>
+                <DataGridTextColumn Header="Второй час" x:Name="Hour1" Binding="{Binding Path=Hours[1].Cost}"/>
+                <DataGridTextColumn Header="Третий час" x:Name="Hour2" Binding="{Binding Path=Hours[2].Cost}"/>
+                <DataGridTextColumn Header="Четвертый час" x:Name="Hour3" Binding="{Binding Path=Hours[3].Cost}"/>
+                <DataGridTextColumn Header="Пятый час" x:Name="Hour4" Binding="{Binding Path=Hours[4].Cost}"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

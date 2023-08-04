@@ -18,6 +18,7 @@ namespace MVVM_Antipub.Models.Database
         public int FreeTimeMinutes { get; set; }
         public string Comment { get; set; }
         public List<Hour> Hours { get; set; }
+        public List<ClosedNote> ClosedNotes { get; set; } = new List<ClosedNote>();
         public Tariff(string tariffName, List<Hour> hours)
         {
             Name = tariffName;

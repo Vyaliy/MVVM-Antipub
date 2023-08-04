@@ -169,8 +169,10 @@ namespace MVVM_Antipub.ViewModels
                     {
                         
                         CurrentNote cn = (CurrentNote)obj;
-                        ClosedNote closedNote = new ClosedNote() {ArrivalTime = cn.ArrivalTime, CardNumber = cn.CardNumber, Comment = cn.Comment, PastTime = cn.PastTime, Summ = cn.Summ, TariffNumber = 1, ShiftNumber = 1};
-                        
+                        ClosedNote closedNote = cn;
+                        closedNote.PastTime = cn.PastTime;
+                        closedNote.Summ = cn.Summ;
+
                         if (closedNote != null)
                         {
                             using (var db = new ApplicationContext())
@@ -196,7 +198,6 @@ namespace MVVM_Antipub.ViewModels
                 File.Create(dialogService.FilePath);
             }
             CurrentNotes = new ObservableCollection<CurrentNote>();
-            //FillTheNotes(currentNotes);
             OpenFromFile();
             SetTimer();
         }
@@ -229,18 +230,7 @@ namespace MVVM_Antipub.ViewModels
                 dialogService.ShowMessage(ex.Message);
             }
         }
-        /// <summary>
-        /// Метод для заполнения коллекции CurrentNote заранее заданными величинами
-        /// </summary>
-        public void FillTheNotes(ObservableCollection<CurrentNote> cn)
-        {
-            cn.Add(new CurrentNote() { Name = "Гость", CardNumber = 1, ArrivalTime = DateTime.Now, TariffName = "Стандарт" });
-            cn.Add(new CurrentNote() { Name = "Гость", CardNumber = 2, ArrivalTime = DateTime.Now, TariffName = "Стандарт" });
-            cn.Add(new CurrentNote() { Name = "Гость", CardNumber = 3, ArrivalTime = DateTime.Now, TariffName = "Стандарт" });
-            cn.Add(new CurrentNote() { Name = "Гость", CardNumber = 4, ArrivalTime = DateTime.Now, TariffName = "Стандарт" });
-            cn.Add(new CurrentNote() { Name = "Гость", CardNumber = 5, ArrivalTime = DateTime.Now, TariffName = "Стандарт" });
-            cn.Add(new CurrentNote() { Name = "Гость", CardNumber = 6, ArrivalTime = DateTime.Now, TariffName = "Стандарт" });
-        }
+
         /// <summary>
         /// Метод для подстановки указанного аргумента в EventHandler
         /// </summary>
@@ -261,11 +251,39 @@ namespace MVVM_Antipub.ViewModels
         {
             //if (timer.IsEnabled)
             //    timer.Stop();
-            for (int i = 0; i < currentNotes.Count; i++)
+            int sum;
+            foreach(var note in CurrentNotes)
             {
-                newone = DateTime.Now - currentNotes[i].ArrivalTime;
-                currentNotes[i].PastTime = newone;
-                currentNotes[i].Summ = 2 * Convert.ToInt32(Math.Truncate(currentNotes[i].PastTime.TotalMinutes));
+                sum = 0;
+                note.PastTime = DateTime.Now - note.ArrivalTime;
+                if (note.PastTime.TotalHours > note.Tariff.Hours.Count)
+                {
+                    foreach (var hour in note.Tariff.Hours)
+                    {
+                        sum += hour.Cost;
+                    }
+                    double temp =  note.PastTime.TotalHours - (double)note.Tariff.Hours.Count;
+                    sum += Convert.ToInt32(Math.Truncate((double)(note.Tariff.Hours.First(x => x.NumberOfHour == note.Tariff.Hours.Max(x => x.NumberOfHour)).Cost) * temp));
+                }
+                else
+                {
+                    foreach (var hour in note.Tariff.Hours)
+                    {
+                        double remainingTime;
+                        if (note.PastTime.TotalHours >= hour.NumberOfHour)
+                        {
+                            sum += hour.Cost;
+                        }
+                        else
+                        {
+                            remainingTime = hour.NumberOfHour - note.PastTime.TotalHours;
+                            if (remainingTime <= 1)
+                                sum += Convert.ToInt32(Math.Truncate(hour.Cost * (1 - remainingTime)));
+                        }
+                    }
+                }
+                note.Summ = sum;
+                //sum += Convert.ToInt32(Math.Truncate(note.PastTime.TotalMinutes));
             }
             //SaveToFile(); //КОСТЫЛЬ И ОЧЕНЬ ПЛОХОЙ
             //timer.Start();

@@ -22,7 +22,8 @@ namespace MVVM_Antipub.Models.Repositories
             ObservableCollection<Tariff> TariffsObs = new ObservableCollection<Tariff>();
             foreach (var Tariff in Tariffs)
             {
-                if (Tariff.InUse) TariffsObs.Add(Tariff);
+                if (Tariff.InUse) 
+                    TariffsObs.Add(Tariff);
             }
             return TariffsObs;
         }
