@@ -15,7 +15,7 @@ namespace MVVM_Antipub.ViewModels
     public class CurrentNote : ClosedNote, INotifyPropertyChanged
     {
         public string Name { get; set; } = "Гость";
-        public string TariffName { get; set; }
+        public Tariff Tariff { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {

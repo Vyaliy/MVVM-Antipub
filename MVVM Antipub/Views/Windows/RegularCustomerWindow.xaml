@@ -1,0 +1,34 @@
+﻿<Window x:Class="MVVM_Antipub.Views.Windows.RegularCustomerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVM_Antipub.Views.Windows"
+        xmlns:viewmodels="clr-namespace:MVVM_Antipub.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:RegularCustomerWindowViewModel}"
+        mc:Ignorable="d"
+        Title="RegularCustomerWindow" Height="450" Width="800">
+    <DockPanel>
+        <DockPanel Width="800" Height="20" DockPanel.Dock="Top">
+            <Button Command="{Binding AddCommand}" Padding="5, 0" DockPanel.Dock="Left" HorizontalAlignment="Left">Добавить постоянного гостя</Button>
+            <Button Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedRegularCustomer}" Padding="5, 0" DockPanel.Dock="Left" HorizontalAlignment="Left">Удалить постоянного гостя</Button>
+
+        </DockPanel>
+        <DataGrid
+            AutoGenerateColumns="False"
+            DockPanel.Dock="Top"
+            x:Name="TariffGrid"
+            CanUserAddRows="False"
+            
+            SelectedItem="{Binding SelectedRegularCustomer}"
+            ItemsSource="{Binding Path=RegularCustomers, UpdateSourceTrigger=PropertyChanged}" Background="#FF777777" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер карты" x:Name="CardNumber" Binding="{Binding Path=CardNumber}"/>
+                <DataGridTextColumn Header="Имя" x:Name="Name" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Номер телефона" x:Name="PhoneNumber" Binding="{Binding Path=PhoneNumber}"/>
+                <DataGridTextColumn Header="Тариф" x:Name="TariffName" Binding="{Binding Path=Tariff.Name}"/>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</Window>

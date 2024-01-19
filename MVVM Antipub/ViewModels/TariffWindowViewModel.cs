@@ -27,7 +27,7 @@ namespace MVVM_Antipub.ViewModels
             set
             {
                 tariffs = value;
-                OnPropertyChanged();
+                OnPropertyChanged("Tariffs");
             }
         }
         private List<Hour> hours;

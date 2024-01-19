@@ -10,9 +10,9 @@
         Title="TariffChange" Height="450" Width="800">
     <DockPanel>
         <DockPanel Width="800" Height="20" DockPanel.Dock="Top">
-            <Button Command="{Binding AddCommand}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Добавить запись</Button>
-            <Button Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedTariff}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Удалить запись</Button>
-            <Button Command="{Binding EndNote}" CommandParameter="{Binding SelectedTariff}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Закрыть запись</Button>
+            <Button Command="{Binding AddCommand}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Добавить тариф</Button>
+            <Button Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedTariff}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Удалить тариф</Button>
+            
         </DockPanel>
         <DataGrid
             AutoGenerateColumns="False"
@@ -25,6 +25,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Имя" x:Name="Name" Binding="{Binding Path=Name}"/>
                 <DataGridTextColumn Header="Стоп-чек" x:Name="StopCheck" Binding="{Binding Path=StopCheck}"/>
+                <DataGridTextColumn Header="Минимальная сумма" x:Name="MinCost" Binding="{Binding Path=MinimumBill}"/>
+                <DataGridTextColumn Header="Минимальное время" x:Name="MinTime" Binding="{Binding Path=FreeTimeMinutes}"/>
                 <DataGridTextColumn Header="Первый час" x:Name="Hour0" Binding="{Binding Path=Hours[0].Cost}"/>
                 <DataGridTextColumn Header="Второй час" x:Name="Hour1" Binding="{Binding Path=Hours[1].Cost}"/>
                 <DataGridTextColumn Header="Третий час" x:Name="Hour2" Binding="{Binding Path=Hours[2].Cost}"/>

@@ -16,15 +16,15 @@ using System.Windows.Shapes;
 namespace MVVM_Antipub.Views.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для NewTariffWindow.xaml
+    /// Логика взаимодействия для NewRegularCustomerWindow.xaml
     /// </summary>
-    public partial class NewTariffWindow : Window
+    public partial class NewRegularCustomerWindow : Window
     {
-        public NewTariffWindow(TariffWindowViewModel parent)
+        public NewRegularCustomerWindow(RegularCustomerWindowViewModel parentViewModel)
         {
-            NewTariffViewModel newTariffWindowViewModel = new NewTariffViewModel(parent);
-            newTariffWindowViewModel.WANNACLOSE += Close;
-            DataContext = newTariffWindowViewModel;
+            NewRegularCustomerWindowViewModel newRegularCustomerWindowViewModel = new NewRegularCustomerWindowViewModel(parentViewModel);
+            newRegularCustomerWindowViewModel.WANNACLOSE += Close;
+            DataContext = newRegularCustomerWindowViewModel;
             InitializeComponent();
         }
     }

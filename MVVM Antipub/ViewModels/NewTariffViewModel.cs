@@ -20,6 +20,9 @@ namespace MVVM_Antipub.ViewModels
         public ObservableCollection<Hour> Hours { get; set; }
         public Tariff Tariff { get; set; }
         public string Name { get; set; }
+        public int? StopCheck { get; set; }
+        public int? MinCost { get; set; }
+        public int? FreeTime { get; set; }
         public new TariffWindowViewModel parentViewModel { get; set; }
         public NewTariffViewModel(TariffWindowViewModel parentViewModel)
         {
@@ -30,13 +33,14 @@ namespace MVVM_Antipub.ViewModels
             };
         }
         private RelayCommand addCommand;
+        //ДОДЕЛАТЬ ОБРАБОТКУ ОШИБОК
         public ICommand AddCommand
         {
             get
             {
                 return addCommand = new RelayCommand(obj =>
                 {
-                    Tariff = new Tariff(Name, Hours.ToList());
+                    Tariff = new Tariff(Name, Hours.ToList(), StopCheck = this.StopCheck, MinCost = this.MinCost, FreeTime = this.FreeTime);
                     parentViewModel.Tariffs.Add(Tariff);
                     using (var db = new Models.ApplicationContext())
                     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MVVM_Antipub.Models.Database;
+using MVVM_Antipub.Models.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace MVVM_Antipub.Models
         public DbSet<ClosedNote> ClosedNotes { get; set; }
         public DbSet<Hour> Hours { get; set; }
         public DbSet<RegularCustomer> RegularCustomers { get; set; }
+        public DbSet<Shift> Shifts { get; set; }
         public DbSet<Tariff> Tariffs
         {
             get

@@ -12,7 +12,7 @@ namespace MVVM_Antipub.Models.Database
         public int NumberOfHour { get; set; }
         public int Id { get; set; }
         public int Cost { get; set; }
-        [ForeignKey("TariffId")]
+        [ForeignKey("Tariff")]
         public int TariffId { get; set; }
     }
 }

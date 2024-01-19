@@ -14,13 +14,14 @@ namespace MVVM_Antipub.Models.Database
     public class ClosedNote
     {
         public int Id { get; set; }
-        
+        [ForeignKey("Tariff")]
         public int TariffId { get; set; }
-        public Tariff? Tariff { get; set; }
+        public Tariff Tariff { get; set; }
+        [ForeignKey("Shift")]
+        public int ShiftId { get; set; }
 
-        public int ShiftNumber { get; set; }
-        
-        public int CardNumber { get; set; }
+        [ForeignKey("RegularCustomer")]
+        public int? CardNumber { get; set; }
         public DateTime ArrivalTime { get; set; }
         protected TimeSpan pastTime;
         public TimeSpan PastTime

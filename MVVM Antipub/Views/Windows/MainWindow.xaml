@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MVVM_Antipub" xmlns:viewmodels="clr-namespace:MVVM_Antipub.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
+        xmlns:local="clr-namespace:MVVM_Antipub" xmlns:viewmodels="clr-namespace:MVVM_Antipub.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="Учет клиентов антикафе" Height="450" Width="800"
         x:Name="MainWindowA"
@@ -22,12 +23,19 @@
             <MenuItem Header="База данных">
                 <MenuItem Header="Просмотр базы данных" Command="{Binding DBShow}"/>
                 <MenuItem Header="Тарифы" Command="{Binding TariffsShow}"/>
+                <MenuItem Header="Постоянные гости" Command="{Binding RegularCustomersShow}"/>
+            </MenuItem>
+            <MenuItem Header="Смена">
+                <MenuItem Header="Открыть смену" Command="{Binding OpenShift}"/>
+                <MenuItem Header="Закрыть смену" Command="{Binding CloseShift}"/>
             </MenuItem>
         </Menu>
-        <DockPanel Width="800" Height="20" DockPanel.Dock="Top">
+        <DockPanel DockPanel.Dock="Top" Margin="10, 0, 0, 0">
             <Button Command="{Binding AddCommand}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Добавить запись</Button>
             <Button Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedNote}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Удалить запись</Button>
             <Button Command="{Binding EndNote}" CommandParameter="{Binding SelectedNote}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Закрыть запись</Button>
+
+            <TextBlock Text="{Binding CurrentShiftState}" Margin="0, 2, 10, 0"  DockPanel.Dock="Left" HorizontalAlignment="Right"></TextBlock>
         </DockPanel>
         <DataGrid
             AutoGenerateColumns="False"
