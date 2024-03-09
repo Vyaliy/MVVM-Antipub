@@ -226,6 +226,11 @@ namespace MVVM_Antipub.ViewModels
             {
                 return closeShift = new RelayCommand(obj =>
                 {
+                    if (CurrentNotes.Count > 0)
+                    {
+                        dialogService.ShowMessage("Невозможно закрыть смену с незакрытыми записями");
+                        return;
+                    }
                     using (var db = new ApplicationContext())
                     {
                         db.Shifts.Load();

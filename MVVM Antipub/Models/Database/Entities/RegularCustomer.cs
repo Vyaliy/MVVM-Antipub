@@ -11,7 +11,8 @@ namespace MVVM_Antipub.Models.Database
 {
     public class RegularCustomer
     {
-        
+        private ICollection<ClosedNote> closedNotes;
+
         public int Id { get; set; }
         [NotNull]
         public string Name { get; set; }
@@ -25,6 +26,13 @@ namespace MVVM_Antipub.Models.Database
         public Tariff Tariff { get; set; }
         [ForeignKey("Tariff")]
         public int TariffId { get; set; }
-        public ICollection<ClosedNote> ClosedNotes { get; set; }
+        public ICollection<ClosedNote> ClosedNotes 
+        { 
+            get => closedNotes;
+            set
+            {
+                closedNotes = value;
+            }
+        }
     }
 }
