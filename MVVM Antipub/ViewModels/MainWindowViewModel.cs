@@ -30,6 +30,18 @@ namespace MVVM_Antipub.ViewModels
         //Создание коллекции
         IDialogService dialogService;
         IFileService fileService;
+        private Shift sh;
+        public Shift Sh
+        {
+            get
+            {
+                return sh;
+            }
+            set
+            {
+                sh = value;
+            }
+        }
         private string currentShiftState;
         public string CurrentShiftState
         {
@@ -95,7 +107,7 @@ namespace MVVM_Antipub.ViewModels
                         NewNoteWindow wndNewNote = new NewNoteWindow(this);
                         wndNewNote.ShowDialog();
                         SaveToFile(); //КОСТЫЛЬ
-                    });
+                    }, (obj) => Sh != null);
             }
         }
         private RelayCommand removeCommand;
@@ -207,10 +219,10 @@ namespace MVVM_Antipub.ViewModels
                         db.Shifts.Load();
                         if (!db.Shifts.Local.Any(opened => opened.CloseTime == null))
                         {
-                            Shift sh = new Shift();
-                            db.Shifts.Add(sh);
+                            Sh = new Shift();
+                            db.Shifts.Add(Sh);
                             db.SaveChanges();
-                            dialogService.ShowMessage($"Смена №{sh.Id} успешно открыта");
+                            dialogService.ShowMessage($"Смена №{Sh.Id} успешно открыта");
                         }
                         else
                             dialogService.ShowMessage("Необходимо закрыть смену для открытия новой");
@@ -236,12 +248,13 @@ namespace MVVM_Antipub.ViewModels
                         db.Shifts.Load();
                         if (db.Shifts.Local.Any(opened => opened.CloseTime == null))
                         {
-                            Shift sh = db.Shifts.Local.Last(opened => opened.CloseTime == null);
+                            Sh = db.Shifts.Local.Last(opened => opened.CloseTime == null);
                             //db.Shifts.Remove(sh);
-                            sh.CloseTime = DateTime.Now;
-                            db.Shifts.Update(sh);
+                            Sh.CloseTime = DateTime.Now;
+                            db.Shifts.Update(Sh);
                             db.SaveChanges();
-                            dialogService.ShowMessage($"Смена №{sh.Id} успешно закрыта");
+                            dialogService.ShowMessage($"Смена №{Sh.Id} успешно закрыта");
+                            Sh = null;
                         }
                         else
                             dialogService.ShowMessage("Нет открытой смены");
@@ -311,6 +324,11 @@ namespace MVVM_Antipub.ViewModels
                 File.Create(dialogService.FilePath);
             }
             CurrentNotes = new ObservableCollection<CurrentNote>();
+            using (var db = new ApplicationContext())
+            {
+                db.Shifts.Load();
+                Sh = db.Shifts.Local.LastOrDefault(opened => opened.CloseTime == null);
+            }
             OpenFromFile();
             SetTimer();
         }
@@ -427,6 +445,19 @@ namespace MVVM_Antipub.ViewModels
                     RegularCustomerWindow regularCustomerWindow = new RegularCustomerWindow(this);
                     regularCustomerWindow.ShowDialog();
                 });
+            }
+        }
+
+        private RelayCommand currentClosedNotesShow;
+        public RelayCommand CurrentClosedNotesShow
+        {
+            get
+            {
+                return currentClosedNotesShow = new RelayCommand(obj =>
+                {
+                    CurrentClosedNotesShowWindow currentClosedNotesShowWindow = new CurrentClosedNotesShowWindow();
+                    currentClosedNotesShowWindow.ShowDialog();
+                }, (obj) => Sh != null);
             }
         }
     }

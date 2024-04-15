@@ -51,6 +51,7 @@ namespace MVVM_Antipub.ViewModels
             }
             ChosenTariff = new Tariff();
             Cn = new CurrentNote();
+            Cn.ShiftId = this.parentViewModel.Sh.Id;
         }
     }
 }

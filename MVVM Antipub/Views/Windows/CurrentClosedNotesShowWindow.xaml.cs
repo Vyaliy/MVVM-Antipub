@@ -21,12 +21,12 @@ namespace MVVM_Antipub.Views.Windows
     /// <summary>
     /// Логика взаимодействия для DBShow.xaml
     /// </summary>
-    public partial class ClosedNotesShowWindow : Window
+    public partial class CurrentClosedNotesShowWindow : Window
     {
         public ClosedNote ClosedNote { get; set; }
-        public ClosedNotesShowWindow()
+        public CurrentClosedNotesShowWindow()
         {
-            ClosedNotesShowWindowViewModel dBShowWindowViewModel = new ClosedNotesShowWindowViewModel();
+            CurrentClosedNotesShowWindowViewModel dBShowWindowViewModel = new CurrentClosedNotesShowWindowViewModel();
             dBShowWindowViewModel.WANNACLOSE += Close;
             DataContext = dBShowWindowViewModel;
             InitializeComponent();
