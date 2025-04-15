@@ -24,11 +24,15 @@ namespace MVVM_Antipub.Views.Windows
     public partial class DBShowWindow : Window
     {
         public ClosedNote ClosedNote { get; set; }
+
         public DBShowWindow()
         {
-            DBShowWindowViewModel dBShowWindowViewModel = new DBShowWindowViewModel();
-            dBShowWindowViewModel.WANNACLOSE += Close;
             InitializeComponent();
+
+            // Получаем DBShowWindowViewModel через DI
+            var dBShowWindowViewModel = AppHost.GetService<DBShowWindowViewModel>();
+            dBShowWindowViewModel.WANNACLOSE += Close;
+
             DataContext = dBShowWindowViewModel;
         }
     }

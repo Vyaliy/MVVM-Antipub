@@ -17,6 +17,23 @@ namespace MVVM_Antipub.ViewModels
 {
     public class TariffChangeViewModel : ViewModelBase
     {
+        private MainWindowViewModel _mainViewModel;
+
+        public void Initialize(MainWindowViewModel mainWindowViewModel)
+        {
+            _mainViewModel = mainWindowViewModel;
+        }
+
+        private Tariff selectedTariff;
+        public Tariff SelectedTariff
+        {
+            get => selectedTariff;
+            set
+            {
+                selectedTariff = value;
+                OnPropertyChanged(nameof(SelectedTariff));
+            }
+        }
         private ObservableCollection<Tariff> tariffs;
         public ObservableCollection<Tariff> Tariffs 
         {
@@ -48,17 +65,42 @@ namespace MVVM_Antipub.ViewModels
         {
             get
             {
-                return addCommand = new RelayCommand(obj =>
+                return addCommand ??= new RelayCommand(obj =>
                 {
                     NewTariffWindow wndNewTariff = new NewTariffWindow(this);
                     wndNewTariff.ShowDialog();
+
                     using (var db = new ApplicationContext())
                     {
-                        db.Database.EnsureDeleted();
                         db.Tariffs.Add(Tariffs.Last());
                         db.SaveChanges();
                     }
                 });
+            }
+        }
+        private RelayCommand removeCommand;
+        public RelayCommand RemoveCommand
+        {
+            get
+            {
+                return removeCommand ??= new RelayCommand(_ =>
+                {
+                    if (SelectedTariff != null)
+                    {
+                        using (var db = new ApplicationContext())
+                        {
+                            var entity = db.Tariffs.Include(t => t.Hours).FirstOrDefault(t => t.Id == SelectedTariff.Id);
+                            if (entity != null)
+                            {
+                                db.Tariffs.Remove(entity);
+                                db.SaveChanges();
+                            }
+                        }
+                        Tariffs.Remove(SelectedTariff);
+                        SelectedTariff = null;
+                    }
+                },
+                _ => SelectedTariff != null);
             }
         }
     }

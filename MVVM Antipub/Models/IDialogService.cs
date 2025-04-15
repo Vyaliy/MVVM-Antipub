@@ -8,9 +8,9 @@ namespace MVVM_Antipub.ViewModels
 {
     public interface IDialogService
     {
-        void ShowMessage(string message);   // показ сообщения
-        string FilePath { get; set; }   // путь к выбранному файлу
-        bool OpenFileDialog();  // открытие файла
-        bool SaveFileDialog();  // сохранение файла
+        public void ShowMessage(string message);   // показ сообщения
+        public string FilePath { get; set; }   // путь к выбранному файлу
+        public bool OpenFileDialog();  // открытие файла
+        public bool SaveFileDialog();  // сохранение файла
     }
 }

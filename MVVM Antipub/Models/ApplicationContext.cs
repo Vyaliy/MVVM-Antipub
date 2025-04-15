@@ -20,8 +20,8 @@ namespace MVVM_Antipub.Models
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlite("Data Source=Antipub.db");
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-B5LD0OU;Server=.\SQLEXPRESS;Database=TimeCafe;Trusted_Connection=True;TrustServerCertificate=True;options => options.EnableRetryOnFailure()");
+            optionsBuilder.UseSqlite("Data Source=Antipub.db");
+            //optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Server=.\SQLEXPRESS;Database=TimeCafe;Trusted_Connection=True;TrustServerCertificate=True;");
 
         }
     }

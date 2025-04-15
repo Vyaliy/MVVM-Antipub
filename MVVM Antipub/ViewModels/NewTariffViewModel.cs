@@ -15,21 +15,22 @@ namespace MVVM_Antipub.ViewModels
 {
     public class NewTariffViewModel : ViewModelBase
     {
-        
+        private TariffChangeViewModel _parentViewModel;
+
+        public void Initialize(TariffChangeViewModel parentViewModel)
+        {
+            _parentViewModel = parentViewModel;
+            Hours = new ObservableCollection<Hour>
+            {
+                new Hour() { NumberOfHour = 1, Cost = 100 }
+            };
+        }
         public ObservableCollection<Hour> Hours { get; set; }
         public Tariff Tariff { get; set; }
         public string Name { get; set; }
-        public new TariffChangeViewModel parentViewModel { get; set; }
-        public NewTariffViewModel(TariffChangeViewModel parentViewModel)
-        {
-            this.parentViewModel = parentViewModel;
-            Hours = new ObservableCollection<Hour>
-            {
-                new Hour() {NumberOfHour = 1, Cost = 100}
-            };
-        }
+
         private RelayCommand addCommand;
-        public ICommand AddCommand
+        public RelayCommand AddCommand
         {
             get
             {
@@ -37,12 +38,7 @@ namespace MVVM_Antipub.ViewModels
                 {
                     Tariff = new Tariff(Name, Hours.ToList());
                     Tariff.Name = Name;
-                    try
-                    {
-                        parentViewModel.Tariffs.Add(Tariff);
-                    }
-                    catch (Exception ex)
-                    { }
+                    _parentViewModel.Tariffs.Add(Tariff);
                     CloseThis();
 
                 });

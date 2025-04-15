@@ -22,9 +22,12 @@ namespace MVVM_Antipub.Views.Windows
     {
         public TariffChange(MainWindowViewModel mainWindowViewModel)
         {
-            TariffChangeViewModel tariffChangeViewModel= new TariffChangeViewModel(mainWindowViewModel);
-            tariffChangeViewModel.WANNACLOSE += Close;
             InitializeComponent();
+
+            var tariffChangeViewModel = AppHost.GetService<TariffChangeViewModel>();
+            tariffChangeViewModel.Initialize(mainWindowViewModel); // передаём зависимость
+            tariffChangeViewModel.WANNACLOSE += Close;
+
             DataContext = tariffChangeViewModel;
         }
     }

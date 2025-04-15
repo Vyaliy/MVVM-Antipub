@@ -25,11 +25,11 @@ namespace MVVM_Antipub
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public MainWindow(MainWindowViewModel viewModel)
         {
             InitializeComponent();
 
-            DataContext = new MainWindowViewModel(new JsonFileService());
+            DataContext = viewModel;  // Связываем DataContext с ViewModel через DI
         }
     }
 }

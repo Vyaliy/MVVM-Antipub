@@ -20,12 +20,20 @@ namespace MVVM_Antipub.Views.Windows
     /// </summary>
     public partial class NewTariffWindow : Window
     {
-        public NewTariffWindow(TariffChangeViewModel parent)
+        private readonly TariffChangeViewModel _parentViewModel;
+
+        public NewTariffWindow(TariffChangeViewModel parentViewModel)
         {
-            NewTariffViewModel newNoteViewModel = new NewTariffViewModel(parent);
-            newNoteViewModel.WANNACLOSE += Close;
-            DataContext = newNoteViewModel;
             InitializeComponent();
+
+            _parentViewModel = parentViewModel;
+
+            // Получаем NewTariffViewModel через DI
+            var newTariffViewModel = AppHost.GetService<NewTariffViewModel>();
+            newTariffViewModel.Initialize(_parentViewModel);  // Передаём в метод
+            newTariffViewModel.WANNACLOSE += Close;
+
+            DataContext = newTariffViewModel;
         }
     }
 }

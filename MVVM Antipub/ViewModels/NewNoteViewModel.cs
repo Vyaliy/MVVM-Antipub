@@ -11,11 +11,16 @@ namespace MVVM_Antipub.ViewModels
 {
     public class NewNoteViewModel : ViewModelBase
     {
+        private MainWindowViewModel _parentViewModel;
+
+        public void Initialize(MainWindowViewModel parentViewModel)
+        {
+            _parentViewModel = parentViewModel;
+        }
         public string Name { get; set; }
         public int CardNumber { get; set; }
         public string TariffName { get; set; }
         public CurrentNote Cn { get; set; }
-        public new MainWindowViewModel parentViewModel { get; set; }
         public RelayCommand addCommand;
         public RelayCommand AddCommand
         {
@@ -26,15 +31,12 @@ namespace MVVM_Antipub.ViewModels
                     Cn = new CurrentNote() { Name = Name, CardNumber = CardNumber, ArrivalTime = DateTime.Now, TariffName = TariffName };
                     if (Cn.Name == null || Cn.Name == "") Cn.Name = "Гость";
                     if (Cn.TariffName == null || Cn.TariffName == "") Cn.TariffName = "Стандартный";
-                    parentViewModel.CurrentNotes.Add(Cn);
+                    _parentViewModel.CurrentNotes.Add(Cn);
                     CloseThis();
                     
                 });
             }
         }
-        public NewNoteViewModel(MainWindowViewModel parentViewModel)
-        {
-            this.parentViewModel = parentViewModel;
-        }
+
     }
 }

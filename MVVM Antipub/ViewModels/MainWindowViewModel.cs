@@ -142,6 +142,7 @@ namespace MVVM_Antipub.ViewModels
             {
                 return dBShow = new RelayCommand(obj =>
                 {
+                    // Передаём ViewModel в окно через конструктор
                     DBShowWindow dBShowWindow = new DBShowWindow();
                     dBShowWindow.ShowDialog();
                 });
@@ -164,23 +165,30 @@ namespace MVVM_Antipub.ViewModels
         {
             get
             {
-                return endNote ??
-                    (endNote = new RelayCommand(obj =>
+                return endNote ??= new RelayCommand(obj =>
+                {
+                    if (obj is not CurrentNote cn) return;
+
+                    var closedNote = new ClosedNote
                     {
-                        
-                        CurrentNote cn = (CurrentNote)obj;
-                        ClosedNote closedNote = new ClosedNote() {ArrivalTime = cn.ArrivalTime, CardNumber = cn.CardNumber, Comment = cn.Comment, PastTime = cn.PastTime, Summ = cn.Summ, TariffNumber = 1, ShiftNumber = 1};
-                        
-                        if (closedNote != null)
-                        {
-                            using (var db = new ApplicationContext())
-                            {
-                                db.ClosedNotes.Add(closedNote);
-                                db.SaveChanges();
-                            }
-                        }
-                    },
-                    (obj) => CurrentNotes.Count > 0));
+                        ArrivalTime = cn.ArrivalTime,
+                        CardNumber = cn.CardNumber,
+                        Comment = cn.Comment,
+                        PastTime = cn.PastTime,
+                        Summ = cn.Summ,
+                        TariffNumber = 1,
+                        ShiftNumber = 1
+                    };
+
+                    using (var db = new ApplicationContext())
+                    {
+                        db.ClosedNotes.Add(closedNote);
+                        db.SaveChanges();
+                    }
+
+                    CurrentNotes.Remove(cn);
+                },
+                obj => CurrentNotes.Count > 0);
             }
         }
         /// <summary>

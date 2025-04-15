@@ -22,12 +22,20 @@ namespace MVVM_Antipub.Views
     /// </summary>
     public partial class NewNote : Window
     {
+        private readonly MainWindowViewModel _parentViewModel;
+
         public NewNote(MainWindowViewModel parentViewModel)
         {
-            NewNoteViewModel newNoteViewModel = new NewNoteViewModel(parentViewModel);
-            newNoteViewModel.WANNACLOSE += Close;
-            DataContext = newNoteViewModel;
             InitializeComponent();
+
+            _parentViewModel = parentViewModel;
+
+            // Получаем NewNoteViewModel через DI
+            var newNoteViewModel = AppHost.GetService<NewNoteViewModel>();
+            newNoteViewModel.Initialize(_parentViewModel);  // Передаём в метод
+            newNoteViewModel.WANNACLOSE += Close;
+
+            DataContext = newNoteViewModel;
         }
     }
 }
