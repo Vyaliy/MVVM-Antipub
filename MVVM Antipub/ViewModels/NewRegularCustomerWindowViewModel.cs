@@ -9,6 +9,7 @@ using System.Formats.Tar;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MVVM_Antipub.ViewModels
@@ -39,6 +40,16 @@ namespace MVVM_Antipub.ViewModels
             {
                 return addCommand = new RelayCommand(obj =>
                 {
+                    if (ChosenTariff == null)
+                    {
+                        MessageBox.Show("Не выбран тариф");
+                        return;
+                    }
+                    if (RgCustomer.CardNumber <= 0)
+                    {
+                        MessageBox.Show("Номер карты указан неверно");
+                        return;
+                    }
                     using (var db = new Models.ApplicationContext())
                     {
                         RgCustomer.TariffId = ChosenTariff.Id;

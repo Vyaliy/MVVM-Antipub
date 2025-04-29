@@ -150,7 +150,7 @@ namespace MVVM_Antipub.ViewModels
                     SaveToFile(); //ВОЗМОЖНО КОСТЫЛЬ
                 }
             },
-                                (obj) => CurrentNotes.Count > 0));
+            (obj) => CurrentNotes.Count > 0 && SelectedNote is not null));
         }
 
         private CurrentNote selectedNote;
@@ -314,10 +314,15 @@ namespace MVVM_Antipub.ViewModels
                         closedNote.PastTime = cn.PastTime;
                         closedNote.Summ = cn.Summ;
 
+
                         if (closedNote != null)
                         {
                             using (var db = new ApplicationContext())
                             {
+                                var regular = db.RegularCustomers.FirstOrDefault(r => r.CardNumber == cn.CardNumber);
+                                if (regular != null)
+                                    closedNote.RegularCustomerId = regular.Id;
+
                                 db.ClosedNotes.Add(closedNote);
                                 db.SaveChanges();
                             }
@@ -327,7 +332,7 @@ namespace MVVM_Antipub.ViewModels
 
 
                     },
-                    (obj) => CurrentNotes.Count > 0));
+                    (obj) => CurrentNotes.Count > 0 && SelectedNote is not null));
             }
         }
         /// <summary>

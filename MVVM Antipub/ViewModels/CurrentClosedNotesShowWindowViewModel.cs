@@ -17,29 +17,21 @@ namespace MVVM_Antipub.ViewModels
         {
             using (var db = new ApplicationContext())
             {
-                //db.Database.EnsureCreated();
-                db.ClosedNotes.Load();
                 db.Tariffs.Load();
                 db.Shifts.Load();
                 db.RegularCustomers.Load();
-                int LastShift = db.Shifts.Max(x => x.Id);
-                /*
-                foreach (var note in db.ClosedNotes)
-                {
-                    note.Tariff = db.Tariffs.First(x => x.Id == note.TariffId);
-                }
-                */
-                foreach (var note in db.ClosedNotes)
-                {
-                    //Сделать имя гостя!!!!!!!!!!!!
 
-                }
-                ClosedNotes = db.ClosedNotes.Local.ToObservableCollection();
-                var a = ClosedNotes.Where(x => x.ShiftId == LastShift).ToList();
-                ClosedNotes = new ObservableCollection<ClosedNote>(a);
+                int lastShiftId = db.Shifts.Max(x => x.Id);
+
+                var notes = db.ClosedNotes
+                    .Include(x => x.Tariff)
+                    .Include(x => x.RegularCustomer)
+                    .Where(x => x.ShiftId == lastShiftId)
+                    .ToList();
+
+                ClosedNotes = new ObservableCollection<ClosedNote>(notes);
                 Tariffs = db.Tariffs.Local.ToObservableCollection();
                 RegularCustomers = db.RegularCustomers.Local.ToObservableCollection();
-
             }
         }
         public ObservableCollection<ClosedNote> ClosedNotes { get; set; }

@@ -22,9 +22,12 @@ namespace MVVM_Antipub.Models.Database
         [ForeignKey("Shift")]
         public int ShiftId { get; set; }
 
-        [ForeignKey("RegularCustomer")]
-        public int? CardNumber { get; set; }
-        public RegularCustomer RegularCustomer { get; set; }
+        public int CardNumber { get; set; }
+
+        public int? RegularCustomerId { get; set; }
+
+        [ForeignKey("RegularCustomerId")]
+        public RegularCustomer? RegularCustomer { get; set; }
 
         public DateTime ArrivalTime { get; set; }
         protected TimeSpan pastTime;
@@ -43,9 +46,8 @@ namespace MVVM_Antipub.Models.Database
             }
         }
         public string Comment { get; set; }
-        public ClosedNote()
-        {
 
-        }
+        [NotMapped]
+        public string DisplayName => RegularCustomer?.Name ?? "Гость";
     }
 }

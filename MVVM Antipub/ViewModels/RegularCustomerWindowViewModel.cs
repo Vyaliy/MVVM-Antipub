@@ -64,7 +64,8 @@ namespace MVVM_Antipub.ViewModels
                 {
                     NewRegularCustomerWindow newRegularCustomerWindow = new NewRegularCustomerWindow(this);
                     newRegularCustomerWindow.ShowDialog();
-                });
+                }
+                );
             }
         }
         public RelayCommand removeCommand;
@@ -87,7 +88,7 @@ namespace MVVM_Antipub.ViewModels
                             }
                         }
                     },
-                    (obj) => RegularCustomers.Count > 0)
+                    (obj) => RegularCustomers.Count > 0 && SelectedRegularCustomer is not null)
                     );
             }
         }

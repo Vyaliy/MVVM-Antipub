@@ -4,10 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVM_Antipub.Views.Windows"
+        xmlns:conv="clr-namespace:MVVM_Antipub.Converters" 
         xmlns:viewmodels="clr-namespace:MVVM_Antipub.ViewModels" 
         d:DataContext="{d:DesignInstance Type=viewmodels:CurrentClosedNotesShowWindowViewModel}"
         mc:Ignorable="d"
         Title="Учет клиентов антикафе" Height="450" Width="800">
+    <Window.Resources>
+        <!-- Явное добавление конвертера в ресурсы окна -->
+        <conv:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter"/>
+    </Window.Resources>
     <Grid>
         <DataGrid
             AutoGenerateColumns="False"
@@ -17,10 +22,10 @@
             SelectedItem="{Binding SelectedNote}"
             ItemsSource="{Binding Path=ClosedNotes}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Имя" x:Name="Name" Binding="{Binding Path=RegularCustomer.Name}"/>
+                <DataGridTextColumn Header="Имя" x:Name="Name" Binding="{Binding Path=DisplayName}"/>
                 <DataGridTextColumn Header="Номер карты" x:Name="CardNumber" Binding="{Binding Path=CardNumber}"/>
                 <DataGridTextColumn Header="Время прибытия" x:Name="ArrivalTime" Binding="{Binding Path=ArrivalTime, StringFormat= HH:mm:ss}"/>
-                <DataGridTextColumn Header="Прошло времени" x:Name="PastTime" Binding="{Binding Path=PastTime, StringFormat= '{}{0:%d} {0:hh}:{0:mm}:{0:ss}', UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Прошло времени" x:Name="PastTime" Binding="{Binding PastTime, Converter={StaticResource TimeSpanToStringConverter}}"/>
                 <DataGridTextColumn Header="Тариф" x:Name="TariffName" Binding="{Binding Path=Tariff.Name}"/>
                 <DataGridTextColumn Header="Сумма" x:Name="Summ" Binding="{Binding Path=Summ, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Комментарий" x:Name="Comment" Binding="{Binding Path=Comment}"/>
