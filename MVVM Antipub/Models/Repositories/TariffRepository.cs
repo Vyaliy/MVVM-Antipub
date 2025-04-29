@@ -11,22 +11,35 @@ namespace MVVM_Antipub.Models.Repositories
 {
     public static class TariffRepository
     {
-        public static ObservableCollection<Tariff> ReadAll(this DbSet<Tariff> db)
+        public static ObservableCollection<Tariff> ReadAll(this DbSet<Tariff> Tariffs, bool withOldTariffs = false)
         {
-            //return db.Local.ToObservableCollection();
-            return new ObservableCollection<Tariff>(
-                db.Include(t => t.Hours)
-                .AsNoTracking()
-                .ToList()
-            );
+            if (withOldTariffs)
+            {
+                Tariffs.Load();
+                return Tariffs.Local.ToObservableCollection();
+            }
+            Tariffs.Load();
+            ObservableCollection<Tariff> TariffsObs = new ObservableCollection<Tariff>();
+            foreach (var Tariff in Tariffs)
+            {
+                if (Tariff.InUse)
+                    TariffsObs.Add(Tariff);
+            }
+            return TariffsObs;
         }
-        public static void Insert (this DbSet<Tariff> db, Tariff tariff)
+        public static void Insert(this DbSet<Tariff> Tariffs, Tariff tariff)
         {
-            db.Add(tariff);
+            Tariffs.Add(tariff);
         }
-        public static void Delete (this DbSet<Tariff> db, Tariff tariff)
+        public static void Delete(this DbSet<Tariff> Tariffs, Tariff tariff, bool ensureDelete = false)
         {
-            db.Remove(tariff);
+            if (ensureDelete)
+            {
+                Tariffs.Remove(tariff);
+                return;
+            }
+            Tariffs.Load();
+            Tariffs.Local.First(tariff1 => tariff1.Id == tariff.Id).InUse = false;
         }
     }
 }

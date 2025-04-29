@@ -15,7 +15,7 @@ using MVVM_Antipub.Views.Windows;
 
 namespace MVVM_Antipub.ViewModels
 {
-    public class TariffChangeViewModel : ViewModelBase
+    public class TariffWindowViewModel : ViewModelBase
     {
         private MainWindowViewModel _mainViewModel;
 
@@ -48,7 +48,7 @@ namespace MVVM_Antipub.ViewModels
             }
         }
         public new MainWindowViewModel parentViewModel { get; set; }
-        public TariffChangeViewModel(MainWindowViewModel parentViewModel) 
+        public TariffWindowViewModel(MainWindowViewModel parentViewModel) 
         {
             base.parentViewModel = parentViewModel;
             Tariffs = new ObservableCollection<Tariff>();
@@ -70,11 +70,11 @@ namespace MVVM_Antipub.ViewModels
                     NewTariffWindow wndNewTariff = new NewTariffWindow(this);
                     wndNewTariff.ShowDialog();
 
-                    using (var db = new ApplicationContext())
-                    {
-                        db.Tariffs.Add(Tariffs.Last());
-                        db.SaveChanges();
-                    }
+                    //using (var db = new ApplicationContext())
+                    //{
+                    //    db.Tariffs.Add(Tariffs.Last());
+                    //    db.SaveChanges();
+                    //}
                 });
             }
         }

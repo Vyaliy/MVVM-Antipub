@@ -1,26 +1,34 @@
 ﻿using MVVM_Antipub.Models;
+using MVVM_Antipub.Models.Database;
+using MVVM_Antipub.Models.Repositories;
 using MVVM_Antipub.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-
+        
 namespace MVVM_Antipub.ViewModels
 {
     public class NewNoteViewModel : ViewModelBase
     {
         private MainWindowViewModel _parentViewModel;
-
         public void Initialize(MainWindowViewModel parentViewModel)
         {
             _parentViewModel = parentViewModel;
+            using (var db = new ApplicationContext())
+            {
+                Tariffs = db.Tariffs.ReadAll();
+            }
+            ChosenTariff = new Tariff();
+            Cn = new CurrentNote();
+            Cn.ShiftId = this._parentViewModel.Sh.Id;
         }
-        public string Name { get; set; }
-        public int CardNumber { get; set; }
-        public string TariffName { get; set; }
         public CurrentNote Cn { get; set; }
+        public ObservableCollection<Tariff> Tariffs { get; set; }
+        public Tariff ChosenTariff { get; set; }
         public RelayCommand addCommand;
         public RelayCommand AddCommand
         {
@@ -28,15 +36,20 @@ namespace MVVM_Antipub.ViewModels
             {
                 return addCommand = new RelayCommand(obj =>
                 {
-                    Cn = new CurrentNote() { Name = Name, CardNumber = CardNumber, ArrivalTime = DateTime.Now, TariffName = TariffName };
-                    if (Cn.Name == null || Cn.Name == "") Cn.Name = "Гость";
-                    if (Cn.TariffName == null || Cn.TariffName == "") Cn.TariffName = "Стандартный";
-                    _parentViewModel.CurrentNotes.Add(Cn);
-                    CloseThis();
-                    
+                    if (_parentViewModel.CurrentNotes.FirstOrDefault(x => x.CardNumber == Cn.CardNumber) != (CurrentNote)default)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        Cn.ArrivalTime = DateTime.Now;
+                        Cn.Tariff = ChosenTariff;
+                        Cn.TariffId = ChosenTariff.Id;
+                        _parentViewModel.CurrentNotes.Add(Cn);
+                        CloseThis();
+                    }
                 });
             }
         }
-
     }
 }

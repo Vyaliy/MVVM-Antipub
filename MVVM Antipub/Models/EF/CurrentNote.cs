@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace MVVM_Antipub.ViewModels
 {
-    
+
     public class CurrentNote : ClosedNote, INotifyPropertyChanged
     {
         public string Name { get; set; } = "Гость";
-        public string TariffName { get; set; }
+        public Tariff Tariff { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
@@ -35,13 +35,13 @@ namespace MVVM_Antipub.ViewModels
         }
         public new int Summ
         {
-            get 
-            { 
+            get
+            {
                 return summ;
             }
-            set 
+            set
             {
-                summ = value; 
+                summ = value;
                 OnPropertyChanged("Summ");
             }
         }

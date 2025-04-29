@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MVVM_Antipub" xmlns:viewmodels="clr-namespace:MVVM_Antipub.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
+        xmlns:local="clr-namespace:MVVM_Antipub" xmlns:viewmodels="clr-namespace:MVVM_Antipub.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="Учет клиентов антикафе" Height="450" Width="800"
         x:Name="MainWindowA"
@@ -16,18 +17,26 @@
             </MenuItem>
             <MenuItem Header="Гость">
                 <MenuItem Header="Добавить" Command="{Binding AddCommand}"></MenuItem>
-                <MenuItem Header="Закрыть запись"></MenuItem>
+                <MenuItem Header="Закрыть запись" Command="{Binding EndNote}" CommandParameter="{Binding SelectedNote}"></MenuItem>
                 <MenuItem Header="Удалить запись" Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedNote}"></MenuItem>
             </MenuItem>
             <MenuItem Header="База данных">
                 <MenuItem Header="Просмотр базы данных" Command="{Binding DBShow}"/>
                 <MenuItem Header="Тарифы" Command="{Binding TariffsShow}"/>
+                <MenuItem Header="Постоянные гости" Command="{Binding RegularCustomersShow}"/>
+            </MenuItem>
+            <MenuItem Header="Смена">
+                <MenuItem Header="Открыть смену" Command="{Binding OpenShift}"/>
+                <MenuItem Header="Закрыть смену" Command="{Binding CloseShift}"/>
+                <MenuItem Header="Просмотр закрытых записей текущей смены" Command="{Binding CurrentClosedNotesShow}"/>
             </MenuItem>
         </Menu>
-        <DockPanel Width="800" Height="20" DockPanel.Dock="Top">
+        <DockPanel DockPanel.Dock="Top" Margin="10, 0, 0, 0">
             <Button Command="{Binding AddCommand}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Добавить запись</Button>
             <Button Command="{Binding RemoveCommand}" CommandParameter="{Binding SelectedNote}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Удалить запись</Button>
             <Button Command="{Binding EndNote}" CommandParameter="{Binding SelectedNote}" Width="100" DockPanel.Dock="Left" HorizontalAlignment="Left">Закрыть запись</Button>
+
+            <TextBlock Text="{Binding CurrentShiftState}" Margin="0, 2, 10, 0"  DockPanel.Dock="Left" HorizontalAlignment="Right"></TextBlock>
         </DockPanel>
         <DataGrid
             AutoGenerateColumns="False"
@@ -41,7 +50,7 @@
                 <DataGridTextColumn Header="Номер карты" x:Name="CardNumber" Binding="{Binding Path=CardNumber}"/>
                 <DataGridTextColumn Header="Время прибытия" x:Name="ArrivalTime" Binding="{Binding Path=ArrivalTime, StringFormat= HH:mm:ss}"/>
                 <DataGridTextColumn Header="Прошло времени" x:Name="PastTime" Binding="{Binding Path=PastTime, StringFormat= hh\\:mm\\:ss, UpdateSourceTrigger=PropertyChanged}"/>
-                <DataGridTextColumn Header="Тариф" x:Name="TariffName" Binding="{Binding Path=TariffName}"/>
+                <DataGridTextColumn Header="Тариф" x:Name="TariffName" Binding="{Binding Path=Tariff.Name}"/>
                 <DataGridTextColumn Header="Сумма" x:Name="Summ" Binding="{Binding Path=Summ, UpdateSourceTrigger=PropertyChanged}"/>
                 <DataGridTextColumn Header="Комментарий" x:Name="Comment" Binding="{Binding Path=Comment}"/>
             </DataGrid.Columns>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -13,10 +14,18 @@ namespace MVVM_Antipub.Models.Database
     public class ClosedNote
     {
         public int Id { get; set; }
-        public int TariffNumber { get; set; }
-        public int ShiftNumber { get; set; }
-        
-        public int CardNumber { get; set; }
+
+        [ForeignKey("Tariff")]
+        public int TariffId { get; set; }
+        public Tariff Tariff { get; set; }
+
+        [ForeignKey("Shift")]
+        public int ShiftId { get; set; }
+
+        [ForeignKey("RegularCustomer")]
+        public int? CardNumber { get; set; }
+        public RegularCustomer RegularCustomer { get; set; }
+
         public DateTime ArrivalTime { get; set; }
         protected TimeSpan pastTime;
         public TimeSpan PastTime
@@ -34,27 +43,6 @@ namespace MVVM_Antipub.Models.Database
             }
         }
         public string Comment { get; set; }
-
-        public ClosedNote(int tariffNumber, int shiftNumber, int cardNumber, DateTime arrivalTime, TimeSpan pastTime, int summ, string comment = "")
-        {
-            TariffNumber = tariffNumber;
-            ShiftNumber = shiftNumber;
-            CardNumber = cardNumber;
-            ArrivalTime = arrivalTime;
-            PastTime = pastTime;
-            Summ = summ;
-            Comment = comment;
-        }
-        public ClosedNote(ClosedNote closedNote)
-        {
-            TariffNumber = closedNote.TariffNumber;
-            ShiftNumber = closedNote.ShiftNumber;
-            CardNumber = closedNote.CardNumber;
-            ArrivalTime = closedNote.ArrivalTime;
-            PastTime = closedNote.PastTime;
-            Summ = closedNote.Summ;
-            Comment = closedNote.Comment;
-        }
         public ClosedNote()
         {
 

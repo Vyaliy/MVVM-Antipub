@@ -1,9 +1,10 @@
-﻿<Window x:Class="MVVM_Antipub.Views.Windows.NewTariffWindow"
+﻿ <Window x:Class="MVVM_Antipub.Views.Windows.NewTariffWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MVVM_Antipub.Views" xmlns:viewmodels="clr-namespace:MVVM_Antipub.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:NewTariffViewModel}"
+        xmlns:local="clr-namespace:MVVM_Antipub.Views" xmlns:viewmodels="clr-namespace:MVVM_Antipub.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:NewTariffViewModel}"
         mc:Ignorable="d"
         Title="Добавить запись" Width="369"
         Height="193">
@@ -11,16 +12,56 @@
         <DockPanel DockPanel.Dock="Top">
             <TextBlock DockPanel.Dock="Left" Text="Название тарифа: "
                  >
-            
+
             </TextBlock>
             <TextBox DockPanel.Dock="Left"
-                 BorderThickness="0"
-                 Width="150"
-                 Text="{Binding Path=Name, Mode=OneWayToSource}"
+                     HorizontalAlignment="Left"
+                     
+                     Width="150"
+                     Text="{Binding Path=Name, Mode=OneWayToSource}"
                  />
 
 
             <Button Height="20" Command="{Binding AddCommand}" Content="Создать тариф" DockPanel.Dock="Left" Width="100"></Button>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <TextBlock DockPanel.Dock="Left" Text="Стоп-чек: "
+                 >
+
+            </TextBlock>
+            <TextBox DockPanel.Dock="Left"
+                     HorizontalAlignment="Left"
+                     
+                     Width="150"
+                     Text="{Binding Path=StopCheck}">
+
+            </TextBox>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <TextBlock DockPanel.Dock="Left" Text="Минимальная сумма: "
+                 >
+
+            </TextBlock>
+            <TextBox DockPanel.Dock="Left" 
+                     HorizontalAlignment="Left"
+                     
+                     Width="150"
+                     Text="{Binding Path=MinCost}">
+
+            </TextBox>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top">
+            <TextBlock DockPanel.Dock="Left" Text="Время бесплатного посещения: "
+                 >
+
+            </TextBlock>
+            <TextBox DockPanel.Dock="Left" 
+                     HorizontalAlignment="Left"
+                     
+                     Width="150"
+                     Text="{Binding Path=FreeTime}">
+
+            </TextBox>
         </DockPanel>
         <DataGrid
             DockPanel.Dock="Top"
@@ -35,6 +76,6 @@
                 <DataGridTextColumn Header="Цена" x:Name="Cost" Binding="{Binding Path=Cost, Mode=TwoWay}"/>
             </DataGrid.Columns>
         </DataGrid>
-        
+
     </DockPanel>
 </Window>

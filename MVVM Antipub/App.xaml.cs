@@ -23,6 +23,7 @@ namespace MVVM_Antipub
 
             // Получаем ViewModel через DI
             var mainVM = AppHost.GetService<MainWindowViewModel>();
+            mainVM.Initialize();
 
             // Передаём её в окно
             var mainWindow = new MainWindow(mainVM);

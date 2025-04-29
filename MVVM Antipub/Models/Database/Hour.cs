@@ -9,10 +9,10 @@ namespace MVVM_Antipub.Models.Database
 {
     public class Hour
     {
-        public int NumberOfHour { get; set; }
-        public int Id { get; set; }
-        public int Cost { get; set; }
+        public int NumberOfHour { get; set; } // Номер часа в тарифе
+        public int Id { get; set; } // Внутренний ID. Первичный ключ.
+        public int Cost { get; set; } // Стоимость часа
         [ForeignKey("TariffId")]
-        public int TariffId { get; set; }
+        public int TariffId { get; set; } // Внешний ключ на конкретный тариф
     }
 }

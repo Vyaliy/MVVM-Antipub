@@ -29,6 +29,8 @@ namespace MVVM_Antipub
         {
             InitializeComponent();
 
+
+
             DataContext = viewModel;  // Связываем DataContext с ViewModel через DI
         }
     }

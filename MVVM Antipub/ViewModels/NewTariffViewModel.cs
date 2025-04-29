@@ -1,5 +1,6 @@
-﻿using MVVM_Antipub.Models;
+﻿﻿using MVVM_Antipub.Models;
 using MVVM_Antipub.Models.Database;
+using MVVM_Antipub.Models.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,9 +16,9 @@ namespace MVVM_Antipub.ViewModels
 {
     public class NewTariffViewModel : ViewModelBase
     {
-        private TariffChangeViewModel _parentViewModel;
+        private TariffWindowViewModel _parentViewModel;
 
-        public void Initialize(TariffChangeViewModel parentViewModel)
+        public void Initialize(TariffWindowViewModel parentViewModel)
         {
             _parentViewModel = parentViewModel;
             Hours = new ObservableCollection<Hour>
@@ -28,17 +29,24 @@ namespace MVVM_Antipub.ViewModels
         public ObservableCollection<Hour> Hours { get; set; }
         public Tariff Tariff { get; set; }
         public string Name { get; set; }
-
+        public int? StopCheck { get; set; }
+        public int? MinCost { get; set; }
+        public int? FreeTime { get; set; }
         private RelayCommand addCommand;
-        public RelayCommand AddCommand
+        //ДОДЕЛАТЬ ОБРАБОТКУ ОШИБОК
+        public ICommand AddCommand
         {
             get
             {
                 return addCommand = new RelayCommand(obj =>
                 {
-                    Tariff = new Tariff(Name, Hours.ToList());
-                    Tariff.Name = Name;
+                    Tariff = new Tariff(Name, Hours.ToList(), StopCheck = this.StopCheck, MinCost = this.MinCost, FreeTime = this.FreeTime);
                     _parentViewModel.Tariffs.Add(Tariff);
+                    using (var db = new Models.ApplicationContext())
+                    {
+                        db.Tariffs.Insert(Tariff);
+                        db.SaveChanges();
+                    }
                     CloseThis();
 
                 });

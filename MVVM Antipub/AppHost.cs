@@ -21,7 +21,11 @@ namespace MVVM_Antipub
             services.AddTransient<DBShowWindowViewModel>();
             services.AddTransient<NewNoteViewModel>();
             services.AddSingleton<NewTariffViewModel>();
-            services.AddSingleton<TariffChangeViewModel>();
+            services.AddSingleton<TariffWindowViewModel>();
+            services.AddTransient<RegularCustomerWindowViewModel>();
+            services.AddSingleton<CurrentClosedNotesShowWindowViewModel>();
+            services.AddSingleton<ClosedNotesShowWindowViewModel>();
+            services.AddSingleton<NewRegularCustomerWindowViewModel>();
 
             _provider = services.BuildServiceProvider();
         }

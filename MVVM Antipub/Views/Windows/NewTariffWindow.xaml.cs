@@ -20,9 +20,9 @@ namespace MVVM_Antipub.Views.Windows
     /// </summary>
     public partial class NewTariffWindow : Window
     {
-        private readonly TariffChangeViewModel _parentViewModel;
+        private readonly TariffWindowViewModel _parentViewModel;
 
-        public NewTariffWindow(TariffChangeViewModel parentViewModel)
+        public NewTariffWindow(TariffWindowViewModel parentViewModel)
         {
             InitializeComponent();
 
